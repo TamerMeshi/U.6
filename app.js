@@ -1,4 +1,19 @@
-
+const priceCalc = {
+  withDiscount() {
+    var result = 0
+    this.productItems.forEach(element =>{
+      result += element.price * element.quantity * ((100 - element.discount) / 100)
+    });
+    return result
+  },
+  withoutDiscount() {
+    var result = 0
+    this.productItems.forEach(element =>{
+      result += element.price * element.quantity
+    });
+    return result
+  },
+};
 
 const store = {
     id: 1,
@@ -9,7 +24,7 @@ const store = {
       street: 'Lenin street',
     },
     dateOfReceipt: '20.09.2023',
-    itemsProduct: [
+    productItems: [
       {
         details: {
           name: 'apple',
@@ -20,12 +35,6 @@ const store = {
         price: 10,
         quantity: 5,
         discount: 15,
-        getSumWithDiscount: () => {
-          return ((this.price * this.quantity) / 100) * (100 - this.discount);
-        },
-        getSumWithoutDiscount: () => {
-          return this.price * this.quantity;
-        },
       },
       {
         details: {
@@ -37,65 +46,62 @@ const store = {
         price: 12,
         quantity: 3,
         discount: 10,
-        getSumWithDiscount: () => {
-          return ((this.price * this.quantity) / 100) * (100 - this.discount);
-        },
-        getSumWithoutDiscount: () => {
-          return this.price * this.quantity;
-        },
+       
       },
     ],
+    __proto__:priceCalc
   };
-
-
     console.log(store)
 
-
+        
+   
+     
+ 
     
-const person = [
-                ['name', 'timur'],
-                ['age', 36],
-                ['isDev', true]
-]
+       console.log(store.withDiscount())
+       console.log(store.withoutDiscount())
 
-                console.log(Object.fromEntries(person))
 
-const store2 = {
-  id: 1,
-  dateAdd: '14.09.2023',
-  nameRecipient: 'Ivan',
-  address: {
-    city: 'Moscow',
-    street: 'Lenin street',
-  },
-  dateOfReceipt: '20.09.2023',
-  itemsProduct: [
+
+
+
+let {productItems:items} = store
+
+console.log(items)
+
+
+
+
+
+const storeClone = structuredClone(store)
+storeClone.address.street = 'lomonosov'
+console.log(store)
+console.log(storeClone)
+
+
+function myClone(obj){
+  const clonedObj={}
+  for( let key in obj){
+    clonedObj[key] = {}
+    if (
+      typeof obj[key] === 'object'
+      // && !Array.isArray(obj[key])
+      // && obj[key] !== null
+    ){
+      clonedObj[key] = myClone(obj[key])
+    }
+    else
     {
-      details: {
-        name: 'apple',
-        weight: 3,
-        cub: 0.5,
-        uuid: '4ac88875-d310-4bb6-8a10-098333db9300',
-      },
-      price: 10,
-      quantity: 5,
-      discount: 15,
-    },
-    {
-      details: {
-        name: 'черри',
-        weight: 2,
-        cub: 0.5,
-        uuid: '4ac88875-d310-4bb6-8a10-098333db9355',
-      },
-      price: 12,
-      quantity: 3,
-      discount: 10,
-    },
-  ],
-};
+      clonedObj[key] = obj[key]
+    }
+  }
+ return clonedObj
+}
 
-let storeClone = structuredClone(store2);
-console.log(storeClone);
+const storeClone2 = myClone(store)
+storeClone2.address.street = 'lomonosov'
+console.log(store)
+console.log(storeClone2)
+
 
 
