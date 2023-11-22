@@ -65,7 +65,7 @@ const store = {
 
 
 
-let {productItems:items} = store
+let {itemsProduct:items} = store
 
 console.log(items)
 
@@ -78,11 +78,21 @@ storeClone.address.street = 'lomonosov'
 console.log(store)
 console.log(storeClone)
 
+const x = 1
+var y = "qwe"
+const z = {}
+const w = [1,2]
+
+console.log(x, typeof x)
+console.log(y, typeof y)
+console.log(z, typeof z)
+console.log(w, typeof w)
+
 
 function myClone(obj){
   const clonedObj={}
   for( let key in obj){
-    clonedObj[key] = {}
+    
     if (
       typeof obj[key] === 'object'
       // && !Array.isArray(obj[key])
@@ -99,7 +109,7 @@ function myClone(obj){
 }
 
 const storeClone2 = myClone(store)
-storeClone2.address.street = 'lomonosov'
+storeClone2.address.street = 'Lomonosov'
 console.log(store)
 console.log(storeClone2)
 
